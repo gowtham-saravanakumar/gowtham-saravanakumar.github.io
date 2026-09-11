@@ -1,0 +1,303 @@
+/* Shared portfolio theme for blog and article pages.
+   Keeps the existing page layouts/content while matching index.html's visual system. */
+:root {
+  --bg-rgb: 247, 248, 251;
+  --bg: #f7f8fb;
+  --s1: #ffffff;
+  --s2: #f0f2f6;
+  --s3: #e7eaf0;
+  --bd: rgba(16, 17, 20, 0.10);
+  --bd2: rgba(16, 17, 20, 0.18);
+  --mu: #7e838d;
+  --mu2: #50545d;
+  --tx: #101114;
+  --ac: #315efb;
+  --acd: #244bd6;
+  --in: #6a8cff;
+  --ro: #d84969;
+  --fd: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --fb: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --fm: "DM Mono", "SFMono-Regular", Consolas, monospace;
+  --r: 14px;
+  --rl: 24px;
+  --expo: cubic-bezier(.2,.75,.22,1);
+  --spring: cubic-bezier(.2,1.2,.35,1);
+  --theme-shadow-sm: 0 10px 30px rgba(27, 32, 43, 0.08);
+  --theme-shadow-md: 0 24px 80px rgba(27, 32, 43, 0.12);
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --bg-rgb: 16, 17, 20;
+  --bg: #101114;
+  --s1: #17191e;
+  --s2: #1d2026;
+  --s3: #252932;
+  --bd: rgba(255, 255, 255, 0.09);
+  --bd2: rgba(255, 255, 255, 0.17);
+  --mu: #7f8590;
+  --mu2: #afb4bf;
+  --tx: #f3f4f7;
+  --ac: #7c9cff;
+  --acd: #9eb5ff;
+  --in: #9eb5ff;
+  --ro: #ff7894;
+  --theme-shadow-sm: 0 10px 35px rgba(0, 0, 0, .24);
+  --theme-shadow-md: 0 26px 90px rgba(0, 0, 0, .34);
+  color-scheme: dark;
+}
+
+html { scroll-padding-top: 96px; }
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--fb);
+  text-rendering: optimizeLegibility;
+  transition: background-color .45s var(--expo), color .45s var(--expo);
+}
+body::after { display: none !important; }
+::selection { background: var(--ac); color: #fff; }
+:focus-visible { outline: 2px solid var(--ac); outline-offset: 4px; border-radius: 6px; }
+
+/* Homepage-style scroll progress + pointer. */
+#spb { background: var(--ac) !important; box-shadow: 0 0 12px color-mix(in srgb, var(--ac) 32%, transparent); }
+#cur { background: var(--ac) !important; }
+#cur-r { border-color: color-mix(in srgb, var(--ac) 42%, transparent) !important; }
+body.ch #cur-r { border-color: color-mix(in srgb, var(--ac) 22%, transparent) !important; }
+
+/* Floating pill header to match the portfolio homepage. */
+header#hdr {
+  top: 18px;
+  width: min(calc(100% - 36px), 1280px);
+  max-width: 1280px;
+  height: 68px;
+  padding: 0 12px 0 22px;
+  gap: 18px;
+  background: transparent;
+  border-color: transparent;
+  border-radius: 999px;
+  backdrop-filter: none;
+  box-shadow: none;
+  transition: top .35s var(--expo), width .35s var(--expo), height .35s var(--expo), background .35s var(--expo), border-color .35s var(--expo), box-shadow .35s var(--expo), backdrop-filter .35s var(--expo);
+}
+header#hdr.scrolled {
+  top: 10px;
+  width: min(calc(100% - 28px), 1120px);
+  max-width: 1120px;
+  height: 58px;
+  background: rgba(var(--bg-rgb), .82);
+  border-color: var(--bd);
+  backdrop-filter: blur(24px) saturate(150%);
+  box-shadow: var(--theme-shadow-sm);
+}
+.logo {
+  flex: 0 0 auto;
+  gap: 10px !important;
+  font-family: var(--fd) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: -.04em !important;
+}
+.logo .lmu { color: var(--ac); font-weight: 800; }
+.lpip {
+  position: relative;
+  display: block;
+  width: 22px !important;
+  height: 22px !important;
+  flex: 0 0 22px;
+  border: 1.5px solid var(--tx);
+  border-radius: 50%;
+  background: transparent !important;
+  box-shadow: none !important;
+  animation: none !important;
+  transform: rotate(-8deg);
+}
+.lpip::before,
+.lpip::after {
+  content: "";
+  position: absolute;
+  inset: 0 6px;
+  border: 1.5px solid var(--tx);
+  border-radius: 50%;
+}
+.lpip::before { transform: rotate(60deg); }
+.lpip::after { transform: rotate(-60deg); }
+
+.navl { margin-left: auto; gap: 30px !important; }
+.navl a,
+.hback {
+  font-family: var(--fd) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: var(--mu2) !important;
+}
+.navl a:hover,
+.navl a.active,
+.hback:hover { color: var(--tx) !important; }
+.navl a::after { background: var(--ac) !important; bottom: 4px !important; }
+.ncta {
+  min-height: 42px;
+  display: inline-flex !important;
+  align-items: center;
+  padding: 0 18px !important;
+  border-radius: 999px !important;
+  background: var(--tx) !important;
+  color: var(--bg) !important;
+  font-family: var(--fd) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+.ncta:hover { background: var(--tx) !important; box-shadow: var(--theme-shadow-sm) !important; }
+.hback { margin-left: auto; padding: 10px 0; }
+.hback svg { width: 16px !important; height: 16px !important; }
+
+.site-theme-toggle {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: grid;
+  place-items: center;
+  appearance: none;
+  border: 1px solid var(--bd);
+  border-radius: 50%;
+  background: var(--s1);
+  color: var(--tx);
+  cursor: pointer;
+  transition: background .25s ease, border-color .25s ease, transform .25s var(--expo);
+}
+.site-theme-toggle:hover { border-color: var(--bd2); transform: translateY(-1px); }
+.site-theme-toggle svg {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: opacity .25s ease, transform .35s var(--expo);
+}
+.site-theme-toggle .moon { opacity: 0; transform: scale(.6) rotate(-25deg); }
+html[data-theme="dark"] .site-theme-toggle .sun { opacity: 0; transform: scale(.6) rotate(25deg); }
+html[data-theme="dark"] .site-theme-toggle .moon { opacity: 1; transform: scale(1) rotate(0); }
+
+/* Hero + article surfaces use the same restrained blue system as index.html. */
+.hgrid, .mgrid {
+  background-image: linear-gradient(var(--bd) 1px, transparent 1px), linear-gradient(90deg, var(--bd) 1px, transparent 1px) !important;
+  background-size: 80px 80px !important;
+  opacity: .55;
+}
+.hero-orb, .orb { filter: blur(115px) !important; }
+.ho1, .o1 { background: color-mix(in srgb, var(--ac) 12%, transparent) !important; }
+.ho2 { background: color-mix(in srgb, var(--in) 10%, transparent) !important; }
+.morbg {
+  background: radial-gradient(ellipse 70% 60% at 20% 40%, color-mix(in srgb, var(--ac) 13%, transparent) 0%, transparent 65%),
+              radial-gradient(ellipse 50% 50% at 75% 20%, color-mix(in srgb, var(--in) 9%, transparent) 0%, transparent 60%) !important;
+}
+.blog-hero h1,
+h1.hh1,
+h1.headline,
+h2.stit,
+.prose h2,
+.prose h3,
+.fc-title,
+.bc-title,
+.nl-left h3,
+.ctaband h3,
+.cta-block h3,
+.bio-content h4 { font-family: var(--fd) !important; }
+.blog-hero h1,
+h1.hh1,
+h1.headline { letter-spacing: -.055em !important; font-weight: 650 !important; }
+.blog-hero h1 em,
+h1.headline em,
+.hh1 .hi { color: var(--mu2) !important; }
+.eye,
+.eye-label,
+.hbadge,
+.featured-label,
+.alabel { color: var(--mu) !important; }
+.eye::before,
+.eye-label::before,
+.featured-label::after { background: var(--ac) !important; }
+
+/* Cards, callouts and controls. */
+.featured-card,
+.bc,
+.nl-wrap,
+.abox,
+.sc,
+.tc,
+.faql,
+.callout,
+.metric-strip,
+.faq-block,
+.cta-block,
+.author-bio,
+.read-badge {
+  border-color: var(--bd) !important;
+  box-shadow: none !important;
+}
+.featured-card:hover,
+.bc:hover,
+.sc:hover,
+.tc:hover { border-color: var(--bd2) !important; box-shadow: var(--theme-shadow-sm) !important; }
+.ftag,
+.pnum,
+.bto,
+.bts,
+.cta-btn,
+.nl-btn { border-radius: 999px !important; }
+.ftag.active,
+.pnum.active,
+.bts,
+.cta-btn,
+.nl-btn {
+  background: var(--tx) !important;
+  border-color: var(--tx) !important;
+  color: var(--bg) !important;
+}
+.ftag:hover,
+.pnum:hover,
+.bto:hover { border-color: var(--bd2) !important; color: var(--tx) !important; }
+.read-link,
+.bc-read,
+.breadc a:hover,
+.toc li a:hover,
+.toc li a.active,
+.prose p strong,
+.prose li strong,
+.sv,
+.alabel { color: var(--ac) !important; }
+
+/* Keep semantic tag differences, but soften them to fit the portfolio palette. */
+.ptag { background: color-mix(in srgb, var(--ac) 9%, transparent) !important; border-color: color-mix(in srgb, var(--ac) 20%, transparent) !important; color: var(--ac) !important; }
+.ptag.indigo, .ptag.teal { background: color-mix(in srgb, var(--in) 9%, transparent) !important; border-color: color-mix(in srgb, var(--in) 20%, transparent) !important; color: var(--in) !important; }
+
+/* Forms + footer. */
+.nl-input { background: var(--bg) !important; border-color: var(--bd) !important; color: var(--tx) !important; }
+.nl-input:focus { border-color: var(--ac) !important; }
+footer { border-color: var(--bd) !important; }
+.fcopy, .flinks a { color: var(--mu) !important; }
+.fcopy strong, .flinks a:hover { color: var(--tx) !important; }
+
+@media (max-width: 780px) {
+  header#hdr { top: 10px; width: calc(100% - 24px); height: 58px; padding: 0 9px 0 16px; background: rgba(var(--bg-rgb), .86); border-color: var(--bd); backdrop-filter: blur(20px) saturate(150%); }
+  .site-theme-toggle { width: 38px; height: 38px; flex-basis: 38px; }
+  .navl ~ .site-theme-toggle { margin-left: auto; }
+  .brg { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--bd) !important; border-radius: 50%; background: var(--s1) !important; }
+  .brg span { width: 15px !important; background: var(--tx) !important; }
+  .navl.open { top: 78px !important; left: 12px !important; right: 12px !important; border-radius: 24px !important; background: rgba(var(--bg-rgb), .96) !important; border-color: var(--bd) !important; box-shadow: var(--theme-shadow-md); backdrop-filter: blur(24px); }
+  .navl.open a { font-size: 14px !important; }
+  .hback { font-size: 12px !important; }
+}
+
+@media (max-width: 520px) {
+  .logo .lmu { display: none; }
+  .hback { gap: 5px !important; }
+}
