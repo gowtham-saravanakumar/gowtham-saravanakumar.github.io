@@ -678,11 +678,36 @@
         <span>Contact</span><a href="tel:+918668014466">+91 866 801 4466</a><p>Coimbatore, India</p>
       </div>
     </div>
-    <div class="container footer-bottom">
-      <p>Designed &amp; Developed by Gowtham Saravanakumar © 2026 <a href="#top">Back to top ↑</a> </p>
-      
-      
-    </div>
+   <div class="container footer-bottom">
+  <p>Designed &amp; Developed by Gowtham Saravanakumar © 2026 <a href="#top">Back to top ↑</a></p>
+</div>
+
+<style>
+  .footer-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    margin-top: 80px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font: 400 8px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--text-faint);
+  }
+  .footer-bottom p { margin: 0; }
+  .footer-bottom a { margin-left: 6px; color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .footer-bottom {
+      margin-top: 55px;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+</style>
   </footer>
 
   <script src="assets/js/portfolio.js" defer></script>
