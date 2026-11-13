@@ -92,7 +92,7 @@
 
       <div class="nav-links" id="navLinks">
         <a href="#about">About</a>
-        
+        <a href="#layers">Layers</a>
         <a href="#experience">Experience</a>
         <a href="#work">Work</a>
         <a href="#services">Services</a>
@@ -193,14 +193,14 @@
         </div>
         <div class="arena-window reveal" data-cursor="Drag">
           <div class="arena-bar">
-            <div class="dots"><i></i><i></i><i></i><span>CORE</span></div>
-            <div class="btns"><button id="impulseBtn" type="button">⚡ Impulse</button><button id="resetBtn" type="button"> </button></div>
+            <div class="dots"><i></i><i></i><i></i><span>MAGNETIC_PHYSICS_ARENA.JS</span></div>
+            <div class="btns"><button id="impulseBtn" type="button" aria-label="Trigger impulse">⚡ Impulse</button><button id="resetBtn" type="button" aria-label="Reset arena">↺ Reset</button></div>
           </div>
           <div class="physics-arena" id="physicsArena" role="group" aria-label="Interactive physics arena with draggable SEO system pills">
             <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g class="rings" fill="none"><circle cx="200" cy="200" r="60" stroke="#d4ff33" stroke-dasharray="4 4"/><circle cx="200" cy="200" r="120" stroke="#fff" stroke-dasharray="2 6"/><circle cx="200" cy="200" r="175" stroke="#38bdf8"/><path d="M0 200H400M200 0V400" stroke="#fff" stroke-width=".5"/></g></svg>
             <svg id="physicsLinks" aria-hidden="true"></svg>
             <div id="physicsTokens"></div>
-            <div class="arena-foot"><span></span><b id="physicsTelemetry"></b></div>
+            <div class="arena-foot"><span>Grab, throw, or hover to magnetize nodes</span><b id="physicsTelemetry">60 FPS · SPRING_ON</b></div>
           </div>
         </div>
       </div>
@@ -345,7 +345,7 @@
             <div class="layer-top"><span class="num" id="layerNum">LAYER 01</span><span class="tag" id="layerTag"></span><span class="live">Active plane</span></div>
             <div class="layer-slide" id="layerSlide" aria-live="polite"></div>
             <div class="layer-rail">
-              <div class="layer-track" id="layerTrack"><div class="layer-fill" id="layerFill"></div><div class="layer-knob" id="layerKnob" role="slider" aria-label="Layer" aria-valuemin="1" aria-valuemax="4"></div></div>
+              <div class="layer-track" id="layerTrack"><div class="layer-fill" id="layerFill"></div><div class="layer-knob" id="layerKnob" role="slider" aria-label="Layer" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" tabindex="0"></div></div>
               <div class="layer-steps" id="layerSteps">
                 <button type="button"><small>01</small>Technical SEO</button>
                 <button type="button"><small>02</small>Content systems</button>
@@ -824,10 +824,10 @@
     font: 400 11px var(--font-mono);
     text-transform: uppercase;
     letter-spacing: .05em;
-    color: var(--text-faint);
+    color: #55524a;
   }
   .footer-bottom p { margin: 0; }
-  .footer-bottom a { margin-left: 6px; color: var(--accent); }
+  .footer-bottom a { margin-left: 6px; color: #3f3c33; text-decoration: underline; }
 
   @media (max-width: 640px) {
     .footer-bottom {
@@ -842,5 +842,45 @@
   <script src="assets/js/portfolio.js" defer></script>
   <script src="assets/js/craft.js" defer></script>
   <script src="assets/js/systems.js" defer></script>
+  <script>
+    // A11y helper: keeps the custom "layer" slider's aria-valuenow in sync
+    // with its visual position, and makes it operable from the keyboard
+    // (WAI-ARIA requires sliders to support arrow/home/end keys).
+    (function () {
+      var knob = document.getElementById('layerKnob');
+      var steps = document.querySelectorAll('#layerSteps button');
+      if (!knob || !steps.length) return;
+
+      var min = parseFloat(knob.getAttribute('aria-valuemin')) || 1;
+      var max = parseFloat(knob.getAttribute('aria-valuemax')) || steps.length;
+
+      function syncFromPosition() {
+        var left = parseFloat(knob.style.left) || 0;
+        var value = Math.round(min + (left / 100) * (max - min));
+        value = Math.min(Math.max(value, min), max);
+        knob.setAttribute('aria-valuenow', value);
+      }
+
+      // craft.js updates knob.style.left when the user drags it or clicks a
+      // step; mirror that into aria-valuenow without touching craft.js.
+      new MutationObserver(syncFromPosition)
+        .observe(knob, { attributes: true, attributeFilter: ['style'] });
+      syncFromPosition();
+
+      knob.addEventListener('keydown', function (e) {
+        var current = parseInt(knob.getAttribute('aria-valuenow'), 10) || min;
+        var target = null;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowUp') target = Math.min(current + 1, max);
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') target = Math.max(current - 1, min);
+        else if (e.key === 'Home') target = min;
+        else if (e.key === 'End') target = max;
+        if (target !== null) {
+          e.preventDefault();
+          var btn = steps[target - 1];
+          if (btn) btn.click();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
